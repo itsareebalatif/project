@@ -1,12 +1,6 @@
 # Week 3(Day 1)
 
 
-
-# FastAPI Auth & RBAC Backend
-
-This is a simple backend  template in which i have tried to use FastAPI, SQLAlchemy, and JWT authentication. It handles user signups, secure password hashing, logins with tokens, and basic role-based access control (admin vs user only). 
-
----
 ## What I Use:
 
 * FASTAPI: for handling the API endpoints and auto-docs.
