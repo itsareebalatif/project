@@ -60,3 +60,19 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+from app.core.dependencies import get_current_user, require_role
+
+# Test route for everone
+@router.get("/test-user-route")
+def test_user_route(current_user: User = Depends(get_current_user)):
+    return {
+        "message": f"Hello {current_user.name}! You are logged in successfully.",
+        "your_role": current_user.role
+    }
+
+# test rout for just admin
+@router.get("/test-admin-route")
+def test_admin_route(admin_user: User = Depends(require_role("ADMIN"))):
+    return {
+        "message": f"Welcome Admin {admin_user.name}! You have full clearance."
+    }
