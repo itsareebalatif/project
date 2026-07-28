@@ -21,3 +21,11 @@ First, clone or download the repo, then open up your terminal in the project fol
    python3 -m venv venv
    source venv/bin/activate
    and at the end run : ./venv/bin/python -m uvicorn app.main:app --reload
+
+
+## status codes:
+Informational responses (100 – 199)
+Successful responses (200 – 299)
+Redirection messages (300 – 399)
+Client error responses (400 – 499)
+Server error responses (500 – 599)   

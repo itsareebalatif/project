@@ -5,6 +5,7 @@ from app.routers import users
 from app.routers import posts
 from app.routers import comments
 import logging
+
 #for logger (extra)
 logging.basicConfig(
     level=logging.INFO,
@@ -12,10 +13,10 @@ logging.basicConfig(
 )
 
 
-# 1. Create all database tables automatically based on our models
+# Create all database tables automatically
 Base.metadata.create_all(bind=engine)
 
-# 2. Initialize the FastAPI application
+# Initialize the FastAPI 
 app = FastAPI(
     title="Project OF FAST API",
     description="FastAPI application auth and sec",

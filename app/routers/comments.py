@@ -18,6 +18,8 @@ def get_comments(post_id: int, db: Session = Depends(get_db)):
 def add_comment(post_id: int, comment_data: CommentCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return comment_service.create_comment(db, comment_data, post_id, current_user.id)
 
+
+#too edit the comment but with permission of user(owner)
 @router.put("/{comment_id}", response_model=CommentResponse)
 def update_comment(post_id: int, comment_id: int, comment_data: CommentUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     is_admin = current_user.role.value == "ADMIN" if hasattr(current_user.role, "value") else current_user.role == "ADMIN"
@@ -33,7 +35,7 @@ def delete_comment(post_id: int, comment_id: int, db: Session = Depends(get_db),
     is_admin = current_user.role.value == "ADMIN" if hasattr(current_user.role, "value") else current_user.role == "ADMIN"
     result = comment_service.delete_comment(db, comment_id, current_user.id, is_admin)
     if result is None:
-        raise HTTPException(status_code=404, detail="Comment not found")
+        raise HTTPException(status_code=404, detail="not found cmt")
     if result == "FORBIDDEN":
-        raise HTTPException(status_code=403, detail="Not authorized to delete this comment")
+        raise HTTPException(status_code=403, detail="Not authorized to delete this comment bc you are not owner")
     return None

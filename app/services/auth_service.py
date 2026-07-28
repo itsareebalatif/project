@@ -1,20 +1,38 @@
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user import UserCreate
-from app.core.security import hash_password, verify_password, create_access_token
-
+from app.core.security import get_password_hash, verify_password, create_access_token
+from fastapi import HTTPException,IntegrityError,status
 def register_user(db: Session, user_data: UserCreate):
-    hashed_pwd = hash_password(user_data.password)
-    new_user = User(
-        name=user_data.name,
-        email=user_data.email,
-        hashed_password=hashed_pwd,
-        role=user_data.role
-    )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+    try:
+        
+        hashed_password = get_password_hash(user_data.password)
+        
+        new_user = User(
+            name=user_data.name,
+            email=user_data.email,
+            hashed_password=hashed_password,
+            role=user_data.role
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+        
+    except IntegrityError:
+        db.rollback()  # 👉 Rolls back the failed transaction
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Database error: Email already exists or invalid data."
+        )
+    except Exception as e:
+        db.rollback()  # 👉 Catches any other unexpected DB errors
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An error occurred: {str(e)}"
+        )
+
+
 
 def authenticate_user(db: Session, email: str, password: str):
     user = db.query(User).filter(User.email == email).first()

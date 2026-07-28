@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# SQLite database URL (local file)
+# SQLite database URL (local file)-->donot push this db into git
 SQLALCHEMY_DATABASE_URL = "sqlite:///./project.db"
 
 # Create the SQLAlchemy engine

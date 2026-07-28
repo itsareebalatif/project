@@ -14,11 +14,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email = payload.get("sub") 
+        user_id: str = payload.get("sub")
+        
     except:
         raise HTTPException(status_code=401, detail="Invalid Token or may be expired")
 
-    user = db.query(User).filter(User.email == email).first()
+    user = db.query(User).filter(User.id == int(user_id)).first()
     
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
@@ -26,12 +27,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 def require_role(allowed_role: str):
-    """Reusable dependency to restrict routes to a specific role (e.g., 'admin')."""
+    """Reusable dependency to restrict routes to a specific role like Admin...."""
     def role_dependency(current_user: User = Depends(get_current_user)):
         if current_user.role != allowed_role:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="You do not have permission to perform this action"
+                detail="You do not have permission to perform this action...."
             )
         return current_user
     return role_dependency

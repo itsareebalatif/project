@@ -24,7 +24,7 @@ def signup(user_data: UserCreate, db: Session = Depends(get_db)):
     
     new_user = auth_service.register_user(db, user_data)
     logger.info(f"User signed up successfully: {new_user.email}")
-    return new_user
+    return UserResponse.model_validate(new_user)
 
 
 @router.post("/login", response_model=Token)
