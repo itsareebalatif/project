@@ -10,7 +10,7 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    role = Column(Enum(Role), default=Role.USER) # e.g., "user" or "admin"
+    role = Column(Enum(Role), default=Role.USER) # only 2 users option...
     is_active = Column(Boolean, default=True)
 
     # Relationships
