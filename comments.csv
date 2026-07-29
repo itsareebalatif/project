@@ -1,0 +1,21 @@
+id,post_id,content,owner_id
+1,1,Great explanation! FastAPI is indeed much faster than Flask.,2
+2,1,Thanks for sharing this tutorial super helpful for beginners.,3
+3,2,ORM makes database queries so much cleaner and safer.,4
+4,2,Are there any performance bottlenecks to watch out for with large datasets?,1
+5,3,RAG is definitely the trend this year for enterprise AI apps.,5
+6,3,Can you recommend a good vector database to pair with this?,1
+7,4,Docker multi-stage builds saved me so much image size.,2
+8,5,Async def is amazing when dealing with external API calls.,3
+9,6,Postgres JSONB support is a complete game changer.,4
+10,7,LangGraph gives so much granular control over state graphs.,1
+11,8,Pandas vectorized operations are blazing fast compared to loops.,5
+12,9,Make sure to use a .dockerignore file to keep builds light.,2
+13,11,Pytest fixtures make setting up test states extremely clean.,3
+14,12,Alembic auto-generate is a lifesaver for schema modifications.,1
+15,14,Stripe webhook integration can be tricky good topic for a follow-up!,4
+16,16,Storing user ID in the JWT sub claim is definitely best practice.,2
+17,17,Rooftop gardens look amazing what vegetables are you growing?,1
+18,18,Power BI DAX measures can be a bit steep to learn initially.,3
+19,19,Rebase workflows keep git history so clean and linear.,5
+20,20,Viel Erfolg with your German studies! Consistency is key.,4
