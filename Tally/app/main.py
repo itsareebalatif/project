@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-import database
-import models
-from routes import auth, groups, expenses, balances, export
+from app import database,models
+#from app import models
+from app.routes import auth, groups, expenses, balances, export
 
 database.Base.metadata.create_all(bind=database.engine)
 

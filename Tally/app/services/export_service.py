@@ -1,6 +1,6 @@
 import csv
 import io
-import models
+from app import models
 
 
 def generate_expenses_csv_string(expenses: list[models.Expense]) -> str:

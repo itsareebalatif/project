@@ -1,7 +1,7 @@
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-import models
-import schemas
+from app import models
+from app import schemas
 
 
 def calculate_group_balances(group_id: int, db: Session):

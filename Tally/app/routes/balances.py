@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-import database
-import schemas
-from routes.groups import verify_group_membership
-from services.balance_service import calculate_group_balances
+from app import database
+from app import schemas
+from app.routes.groups import verify_group_membership
+from app.services.balance_service import calculate_group_balances
 
 router = APIRouter(prefix="/groups/{group_id}/balances", tags=["Balances"])
 

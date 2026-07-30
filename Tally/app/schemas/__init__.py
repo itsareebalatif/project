@@ -1,6 +1,6 @@
-from schemas.user import UserBase, UserCreate, UserOut
-from schemas.auth import LoginRequest
-from schemas.token import Token, TokenData
-from schemas.group import GroupCreate, GroupMemberAdd, GroupMemberOut, GroupOut, GroupDetailOut
-from schemas.expense import ExpenseSplitCreate, ExpenseCreate, ExpenseSplitOut, ExpenseOut, ExpenseFilter
-from schemas.balance import MemberBalance
+from app.schemas.user import UserBase, UserCreate, UserOut
+from app.schemas.auth import LoginRequest
+from app.schemas.token import Token, TokenData
+from app.schemas.group import GroupCreate, GroupMemberAdd, GroupMemberOut, GroupOut, GroupDetailOut
+from app.schemas.expense import ExpenseSplitCreate, ExpenseCreate, ExpenseSplitOut, ExpenseOut, ExpenseFilter
+from app.schemas.balance import MemberBalance

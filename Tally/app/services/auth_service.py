@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-import models
-import schemas
-from core import security
+from app import models
+from app import schemas
+from app.core import security
 
 
 def register_user(user_data: schemas.UserCreate, db: Session):
@@ -24,13 +24,11 @@ def register_user(user_data: schemas.UserCreate, db: Session):
 
 def authenticate_user_login(form_data, db: Session):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
+    #if the mail doesnot match or password doesn't match it will throw error
     if not user or not security.verify_password(form_data.password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+       raise HTTPException(401, "Incorrect email or password")
 
-    # Using user.id instead of email for the token subject ("sub")
+
+    # if both matches we will use user.id for the token 
     access_token = security.create_access_token(data={"sub": str(user.id)})
     return {"access_token": access_token, "token_type": "bearer"}

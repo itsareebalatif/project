@@ -1,35 +1,34 @@
 from fastapi import HTTPException, status
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-import models
-import schemas
+from app import models
+from app import schemas
 
 
 def create_expense_atomic(group_id: int, data: schemas.ExpenseCreate, paid_by: int, db: Session):
     member_ids = {
         row.user_id
         for row in db.query(models.GroupMember.user_id).filter(models.GroupMember.group_id == group_id).all()
-    }
+    } # using set ist of list due to duplication purpose
     involved_ids = {paid_by} | {s.user_id for s in data.splits}
+    #checking all ids are members of group or someone is without memebership
     if not involved_ids.issubset(member_ids):
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="paid_by and all split users must be members of the group",
-        )
+        raise HTTPException(422, "paid_by and all split users must be members of the group")
+    
 
     try:
-        # Step A: Save the main expense
+        # Save the main expense
         expense = models.Expense(
-            group_id=group_id,
+            group_id=group_id,     # ← Using the ID from flush()
             description=data.description,
             amount_cents=data.amount_cents,
             category=data.category,
             paid_by=paid_by,
         )
         db.add(expense)
-        db.flush()  # Gets the new expense.id without final commit
+        db.flush()  # use of flush: send it to the database NOW so I can get the ID, but DON'T permanently save it yet
 
-        # Step B: Save all split rows
+        # Save all split rows
         for s in data.splits:
             split = models.ExpenseSplit(
                 expense_id=expense.id,
@@ -38,7 +37,7 @@ def create_expense_atomic(group_id: int, data: schemas.ExpenseCreate, paid_by: i
             )
             db.add(split)
 
-        # Step C: Save everything together permanently
+        
         db.commit()
         db.refresh(expense)
         return expense

@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-import database
-import models
-import schemas
-from core import security  # Adjust import based on your actual path structure
-from routes.groups import verify_group_membership
-from services.expense_service import (
+from app import database
+from app import models
+from app import schemas
+from app.core import security  # Adjust import based on your actual path structure
+from app.routes.groups import verify_group_membership
+from app.services.expense_service import (
     create_expense_atomic,
     delete_expense_record,
     get_filtered_expenses,

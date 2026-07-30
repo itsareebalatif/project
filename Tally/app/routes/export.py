@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
-import database
-import models
-from routes.groups import verify_group_membership
-from services.export_service import generate_expenses_csv_string
+from app import database
+from app import models
+from app.routes.groups import verify_group_membership
+from app.services.export_service import generate_expenses_csv_string
 
 router = APIRouter(prefix="/groups/{group_id}", tags=["Export"])
 
@@ -23,7 +23,7 @@ def export_expenses_csv(
         .all()
     )
 
-    # 2. Generate CSV content via service
+    # via service
     csv_data = generate_expenses_csv_string(expenses)
 
     # 3. Return as a downloadable streaming response

@@ -3,8 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base
-
+from app.database import Base
 
 class Expense(Base):
     __tablename__ = "expenses"

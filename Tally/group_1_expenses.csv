@@ -1,0 +1,4 @@
+Expense ID,Description,Category,Amount (Cents),Paid By User ID,Created At
+3,Supermarket run,Groceries,3000,3,2026-07-29 11:02:27.078448
+2,Hotel Booking,Travel,12000,2,2026-07-27 11:02:27.074999
+1,Beachside Dinner,Food,6000,1,2026-07-25 11:02:27.071409

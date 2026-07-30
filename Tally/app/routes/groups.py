@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-import database
-import models
-import schemas
-from core.dependencies import get_current_user_dependency, verify_group_membership
-from services.group_service import (
+from app import database
+from app import models
+from app import schemas
+from app.core.dependencies import get_current_user_dependency, verify_group_membership
+from app.services.group_service import (
     add_member_to_group,
     create_group_record,
     list_user_groups,
 )
+
 
 router = APIRouter(prefix="/groups", tags=["Groups"])
 

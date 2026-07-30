@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base
-
+from app.database import Base
 
 class ExpenseSplit(Base):
     __tablename__ = "expense_splits"  

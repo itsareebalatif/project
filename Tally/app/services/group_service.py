@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-import models
-import schemas
+from app import models
+from app import schemas
 
 
 def create_group_record(group_data: schemas.GroupCreate, current_user_id: int, db: Session):
