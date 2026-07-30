@@ -78,6 +78,27 @@ LEFT JOIN expenses e ON u.id = e.paid_by
 WHERE e.id IS NULL;
 --Zain
 
+-- 9. Create a reusable view of per-member balances, then query it
+CREATE VIEW vw_member_balances AS
+SELECT 
+    gm.group_id,
+    u.id AS user_id,
+    u.name,
+    COALESCE(p.total_paid, 0) - COALESCE(o.total_owed, 0) AS net_balance
+FROM users u
+JOIN group_members gm ON u.id = gm.user_id
+LEFT JOIN (
+    SELECT paid_by AS user_id, group_id, SUM(amount_cents) AS total_paid
+    FROM expenses
+    GROUP BY paid_by, group_id
+) p ON p.user_id = u.id AND p.group_id = gm.group_id
+LEFT JOIN (
+    SELECT es.user_id, e.group_id, SUM(es.share_cents) AS total_owed
+    FROM expense_splits es
+    JOIN expenses e ON es.expense_id = e.id
+    GROUP BY es.user_id, e.group_id
+) o ON o.user_id = u.id AND o.group_id = gm.group_id;
+
 -- 10. Integrity check: expenses whose splits do NOT sum to the amount
 SELECT e.id, e.amount_cents, SUM(es.share_cents) AS sum_splits
 FROM expenses e
