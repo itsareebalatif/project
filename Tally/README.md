@@ -33,10 +33,6 @@ Tally/
 
 2. Copy `.env.example` to `.env` and set the required environment variables (e.g. `SECRET_KEY`).
 
-3. (Optional) Seed the database with sample data:
-   ```bash
-   python seed.py
-   ```
 
 4. Run the API:
    ```bash
