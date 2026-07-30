@@ -33,8 +33,7 @@ Tally/
 
 2. Copy `.env.example` to `.env` and set the required environment variables (e.g. `SECRET_KEY`).
 
-
-4. Run the API:
+3. Run the API:
    ```bash
    uvicorn app.main:app --reload
    ```
