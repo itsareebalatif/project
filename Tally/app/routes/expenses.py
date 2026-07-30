@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from app import database
@@ -30,10 +32,12 @@ def list_expenses(
     group_id: int,
     category: str | None = None,
     member_id: int | None = None,
+    start_date: date | None = None,
+    end_date: date | None = None,
     group=Depends(verify_group_membership),
     db: Session = Depends(database.get_db),
 ):
-    return get_filtered_expenses(group_id, category, member_id, db)
+    return get_filtered_expenses(group_id, category, member_id, start_date, end_date, db)
 
 
 @router.delete("/{expense_id}", status_code=status.HTTP_204_NO_CONTENT)

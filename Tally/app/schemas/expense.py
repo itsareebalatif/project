@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
@@ -39,10 +39,3 @@ class ExpenseOut(BaseModel):
     paid_by: int
     created_at: datetime
     splits: list[ExpenseSplitOut]
-
-
-class ExpenseFilter(BaseModel):
-    category: str | None = None
-    member_id: int | None = None
-    start_date: date | None = None
-    end_date: date | None = None

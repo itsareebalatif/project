@@ -1,16 +1,11 @@
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
-
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 import pytest
 
-import database
-from main import app
+from app import database
+from app.main import app
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(

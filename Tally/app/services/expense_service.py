@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from fastapi import HTTPException, status
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
@@ -50,7 +52,14 @@ def create_expense_atomic(group_id: int, data: schemas.ExpenseCreate, paid_by: i
         )
 
 
-def get_filtered_expenses(group_id: int, category: str | None, member_id: int | None, db: Session):
+def get_filtered_expenses(
+    group_id: int,
+    category: str | None,
+    member_id: int | None,
+    start_date: date | None,
+    end_date: date | None,
+    db: Session,
+):
     query = db.query(models.Expense).filter(models.Expense.group_id == group_id)
 
     if category:
@@ -60,6 +69,14 @@ def get_filtered_expenses(group_id: int, category: str | None, member_id: int | 
         query = query.join(models.ExpenseSplit).filter(
             (models.Expense.paid_by == member_id) | (models.ExpenseSplit.user_id == member_id)
         ).distinct()
+
+    if start_date:
+        query = query.filter(models.Expense.created_at >= start_date)
+
+    if end_date:
+        # created_at is a full timestamp, so bump end_date to the start of the
+        # next day - otherwise expenses from that day itself get excluded
+        query = query.filter(models.Expense.created_at < end_date + timedelta(days=1))
 
     return query.order_by(models.Expense.created_at.desc()).all()
 
